@@ -1,0 +1,279 @@
+4%2 
+#sprawdzamy jaka jest reszta z dzielenia 
+
+num = 12
+name = 'Sam'
+
+'My number is {} and my name is {}'.format(num,name)
+'My number is {one} and my name is {two}, more {one}'.format(one=num,two=name)
+#wstawianie takich nawiasów {} pozwala na automatyczne uzupe³nienie wartoœciami ze zmiennych zdefiniowanych w fromat()
+
+s='hello'
+s[4]
+#wyciagnie 5 litere z tekstu w zmiennej s
+
+s='abcdefghijk'
+s[0:]
+#wyciagnij od poczatku do konca
+s[:3]
+#wyciagnij wszystko od pocz¹tku do 3 litery w³acznie 
+
+my_list =['a', 'b', 'c']
+my_list.append('d')
+#do³¹czy nowy element do listy 
+
+my_list[0]
+#wyci¹gnie pierwszy element listy
+
+my_list[1:3]
+#wyciagnie drugi i trzeci element 
+
+my_list[0] = 'NEW'
+#zamieni wartoœæ pierwszego elementu listy na element równy 'NEW'
+
+nest=[1,2,[3,4]]
+#wtedy mamy listê w liœcie 
+
+nest[2] 
+#wyci¹gnie t¹ pod listê
+
+nest[2][1]
+#wyciagnie drugi element z podlisty 
+
+nest=[1,2,3,[4,5,['target']]]
+nest[3][2][0]
+#wyci¹gnie test 'target' - czwarty element listy, a z podlisty trzeci element i potem pierwszy element podpodlisty 
+
+
+#DICTIONARY
+d={'key1':'value', 'key2':123} 
+d['key1']
+#zwraca wartoœæ dla klucza key1
+
+d['key2']
+#zwraca wartoœæ dla klucza key2
+
+d={'k1':[1,2,3]}
+#to jest s³ownik z wartoœci¹, która jest lista 
+my_list=d['k1']
+my_list[0]
+
+d['k1'][0]
+#zwróci pierwsz¹ wartoœæ z listy, która jest wartoœci¹ dla s³ownika d 
+
+d={'k1':{'innerkey':[1,2,3]}}
+d['k1']['innerkey'][1]
+#mamy tutaj s³ownik w s³owniku i wyci¹gamy drug¹ wartoœæ z listy, która jest wartoœci¹ dla pods³ownika i s³ownika
+
+#TUPLES
+
+my_list =[1,2,3]
+my_list[0]
+
+t=(1,2,3)
+t[0]
+
+my_list[0]='NEW'
+# wyjdzie z tego wartoœæ ['NEW', 2,3]
+
+t[0] = 'NEW'
+#wykonanie tego jest niemo¿liwe, w tuple nie da sie zmieniæ wartoœci i to jest g³ówna ró¿nica pomiêdzy list¹ a tuple 
+
+{1,2,3}
+#unikalne tuple
+
+{1,1,1,2,2,2,3,3,3}
+#wyjdzie z tego {1,2,3}, gdy¿ zawsze wyœwietli w tuple unikalne wartoœci 
+
+set([1,1,1,1,2,2,2,5,5,5,6,6])
+#wyjdzie z tego tuple {1,2,5,6}
+
+s = {1,2,3}
+s.add(5)
+#wtedy bêdzie {1,2,3,5}
+
+1!=3
+#wyjdzie True, != oznacza tyle co not equal
+
+(1<2) and (2>3)
+#wyjdzie False , nie trzeba wstawiaæ w nawiasy, ale jest bardziej czytelne 
+
+if 1<2:
+	print('yep!')
+#w wyniku bêdzie yep!
+
+if True:
+	x=2+2
+
+if 1 ==2: 
+	print('First')
+else:
+	print('last')
+
+
+if 1==2:
+	print('First')
+elif 3==3:
+	print('Middle')
+elif 4==4:
+	print('second')
+else:
+	print('last')
+
+#wyprintuje pierwszy warunek,który bêdzie spe³niony 
+
+
+seq=[1,2,3,4,5]
+
+for item in seq:
+	print(item)
+#wyprintowane zostan¹ kolejno liczy
+
+for item in seq: 
+	print('Hello')
+
+#5 razy wyprintuje 'Hello'
+
+
+i=1
+while i<5:
+	print('i is:{}'.format(i))
+	i = i+1
+#trzeba dodac i=i+1 bo inaczej bêdzie siê krêci³o w nieskoñczonoœæ, bo i<5 jest zawsze prawd¹
+
+for x in seq:
+	print(x)
+
+range(0,5)
+
+for x in range(0,5):
+	ptint(x)
+wylistuje 0,1,2,3,4
+
+list(range(10))
+#wyjdzie z tego lista [0,1,2,3,4,5,6,7,8,9]
+
+x = [1,2,3,4]
+out=[]
+for num in x:
+	out.append(num**2)
+print(out)
+#wyjdzie z tego [1,4,9,16], append tutaj ma s³u¿yæ po³¹czeniui elementów w jedn¹ listê 
+
+[num**2 for num in x]
+#to jest to sam co wy¿ej, tez wyjdzie [1,4,9,16]
+
+out = [num**2 for num in x]
+out 
+#w wyniku jest [1,4,9,16]
+
+###FUNCTIONS
+def my_func(param1):
+	print(param1)
+
+my_func('Hello')
+#w wyniku bêdzie Hello
+
+def my_func(name):
+	print('Hello'+name)
+
+my_func('Jose')
+#Hello Jose
+
+def my_func(name='Default Name'):
+	print('Hello'+name)
+#tutaj tylko mówimy, ze mamy coœ tam pisaæ
+
+def square(num):
+	return num**2
+
+output = square(2)
+output 
+#wynik bêdzie równy po prostu 4 
+
+def square(num):
+	"""
+	THIS IS A DOCSTRING.
+	CAN GO MULTIPLE LINES.
+	THIS FUNCTION SQUARES A NUMBER.
+	"""
+	return num**2
+
+def times2(var):
+	return var*2
+
+times2(5)
+#w wyniku 10
+
+#map()
+seq=[1,2,3,4,5]
+list(map(times2,seq))
+#wyjdzie z tego lista z elementów z seq, które przesz³y przez funkcjê times2
+
+def times2(var):return var*2
+#tak te¿ mo¿na 
+t = lambda var:var*2
+t(6)
+#to tak samo dzia³a jak funcja 
+
+list(map(lambda num: num*3, seq))
+#wyjdzie z tego [3,6,9,12,15]
+
+
+#zwracanie Boolean values
+list(filter(lambda num: num%2 ==0, seq))
+#w wyniku bêdzie [2,4] bo to filtruje wartoœci dla których wyra¿enie jest prawd¹ 
+
+s = 'hello my name is Sam'
+s.lower()
+#wtedy wszystkie litery bêd¹ ma³e
+s.upper()
+#wszystkie litery du¿e
+s.split()
+#dzieli wyrazy w stringu i bêdzie lista z pojedynczymy slowami 
+
+tweet = 'Go Sports! #Sports'
+tweet.split(#)
+#['Go Sports!', 'Sports!']
+
+tweet.split(#)[1]
+#wybierze tylko drug¹ wartoœæ z listy 
+
+d = {'k1':1, 'k2':2}
+
+d.keys()
+#zwraca klucze ze s³ownika
+
+d.items()
+#zwraca wszystko - klucze i wartosci 
+
+lst=[1,2,3]
+lst.pop()
+#porzuca ostatni¹ wartosæ z listy 
+
+first = lst.pop(0) 
+#porzuca pierwsz¹ wartoœæ 
+
+lst.append('new')
+#doda do listy jako ostatni element wartoœæ 'new'
+
+'x' in ['x','y', 'z']
+#wyjdzie True
+
+x=[(1,2), (3,4), (5,6)]
+x[0]
+#bedzie (1,2)
+x[0][0]
+#bedzie 1 - jako pierwsz wartosc z pierwszej tuple
+
+
+for item in x: 
+	print(item)
+#wyprintuje wszystkie tuples po kolei 
+
+
+for (a,b) n x: 
+	print(b)
+#to bêdzie unpacking of tuple - bo zwróci tylko wartoœci, które s¹ druie w tuple 
+
+

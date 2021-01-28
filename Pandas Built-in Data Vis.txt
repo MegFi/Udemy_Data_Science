@@ -1,0 +1,69 @@
+#PANDAS BUILT-IN DATA VISUALIZATION
+
+import numpy as np 
+import pandas as pd
+%matplotlib inline
+
+df1=pd.read_csv('df1', index_col=0)
+#wskazuje index_col=0, bo pierwsza kolumna jest indexem, wskazujacym ze jest to szereg czasowy i jest tam wpisana data z szeregu czasowego 
+df1.head()
+
+df2 = pd.read_csv('df2')
+df2.head()
+
+import seaborn as sns
+#jak sie go zaimportuje, to wtedy bêd¹ ³adniej wygladac wwykresy w pandasie
+
+df['A'].plot(kind='hist')
+#powyzej to inny sposób zrobienia wykresu 
+
+df1['A'].hist(bins=30)
+#narysuje siê histogram dla kolumny A ze zbioru df1
+
+#mo¿na tez tak
+df1['A'].plot.hist()
+
+df2.head()
+
+df2.plot.area(alpha=0.4)
+#alpha - odpowiada za przeŸroczystoœæ 
+
+df2.plot.bar(stacked=True)
+#bêd¹ w ten sposób wykresy s³upkowe
+#stacked=True - oznacza, ¿e wszystkie kolumny w jednym s³upku, który odpowiada za jakas liczbe 
+
+df1['A'].plot.hist(bins=50)
+
+df1.head()
+df1.plot.line(x=df1.index, y='B', figsize=(12,3), lw=1)
+#lw=1 linie bêd¹ chudsze na wykresie
+
+df1.plot.scatter(x='A', y='B')
+#wykres kropkowy 
+
+df1.plot.scatter(x='A', y='B', c='C', cmap='coolwarm')
+#bêdzie wykres kropkowy, gdzie zmienna c bêdzie wyra¿ona przez paletê barw
+
+df1.plot.scatter(x='A', y='B', s=df1['C']*100)
+#s=df1['C'] - wielkoœæ kropki bêdzie wyra¿ona przez wielkoœæ liczby w zmiennej C, a mno¿ê przez 100 ¿eby te kropki powiêkszyæ 
+
+##BOXPLOT
+plt.style.use('ggplot')
+
+df2.plot.box()
+#ka¿da zmienna jest pokazana na wykresie 
+
+df = pd.DataFrame(np.random.randn(1000,2), columns=['a', 'b'])
+df.plot.hexbin(x='a', y='b', gridsize=25, cmap='coolwarm')
+#gridsize - powiêksza heeksagony, cmap='coolwarm' - pokoloruje ca³¹ przestrzeñ wykresu, która bêdzie pociêta przez heksagony
+
+df2['a'].plot.kde()
+#bêdzie krzywa 
+
+df2['a'].plot.density()
+#bêd¹ wykresy gêstoœci dla wszystkich zmiennych - ka¿da zmienna to inna krzywa gêstoœci 
+
+#po³o¿enie legendy
+plot.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+

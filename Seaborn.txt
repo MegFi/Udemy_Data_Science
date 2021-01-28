@@ -1,0 +1,158 @@
+import seaborn as sns
+%matplotlib inline
+
+tips = sns.load_dataset('tips')
+tips.head()
+
+#rozk³ad zmiennej
+sns.distplot(tips['total_bill'])
+
+sns.displot(tips['total_bill'], kde=False, bins=30)
+#kde=False usunie z histogramu krzyw¹
+#opcja bins okreœla ile ma byæ s³upków na wykresie
+
+#JOINTPLOT - ³¹czone wykresy, np dwóch zmiennych/cech które chcemy porównaæ
+sns.jointplot(x='total_bill',y='tip', data=tips, kind='hex')
+#kind okreœla co jest w g³ównym wykresie - mo¿e byæ 'hex' - heksogramy, 'reg' - regresja liniowa, 'kde' - pokazuje gêstoœæ
+#wyœwietli siê jeden g³ówny wykres i po bokach bêd¹ dwa wykresy jako histogramy poszczególnych cech
+
+sns.pairplot(tips, hue='sex')
+sns.pairplot(tips, hue='sex', palette='warmcolor')
+# generuje zale¿noœci pomiêdzy wszystkimi cechami w tabeli - tworzy macierz i na przek¹tnej s¹ histogramy, a w pozosta³ych wykresy punktowe
+#ale to dzia³a tylko na zmienne liczbowe
+#mo¿emy przeanalizowaæ te¿ wp³yw zmiennych kategorycznych przeez hue, co koloruje wykresy  
+
+sns.rugplot(tips['total_bill'])
+#s¹ tylko kreski u samego do³u i liczy siê ich gêstoœæ 
+
+sns.distplot(tips['total_bill', kde='False']
+# gdy chcemy wykasowaæ krzyw¹ na wykresie z histogramu
+
+###CATEGORICAL PLOTS
+sns.barplot(x='sex',y='total_bill',data=tips)
+#pokazuje kolumnowy wykres dla dwóch p³ci wskazuj¹c na œredni¹ wartoœæ y 
+
+import numpy as np
+sns.barplot(x='sex', y='total_bill', data=tips, estimator=np.std)
+#wskazuje na wykresie zarówno œredni¹ jak i wartoœæ odchylenia standardowego 
+
+sns.countplot(x='sex', data=tips)
+#pokazuje tylko licznoœci dla zmiennej x
+
+sns.boxplot(x='day', y='total_bill', data=tips, hue='smoker')
+#wykresy z w¹sami, pokazuj¹ce odchylenie standardowe i œredni¹ i podzielone s¹ wartoœci wg dni
+#hue='smoker' pozwala na³o¿yæ jeszcze jedn¹ warstwê a dane i pokazaæ np. palaczy w poniedzia³ki i osobno niepalaczy w poniedzialki
+
+sns.violinplot(x='day', y=total_bill', data=tips)
+#pokazuje wykresy wiolinowe 
+
+sns.violinplot(x='day', y='total_bill', data=tips, hue='sex', splits=True)
+#splits=True dzieli jedn¹ wiolinê na jedn¹ p³eæ i druga po³owa to druga p³eæ
+
+sns.stripplot(x='day', y='total_bill', data=tips, jitter=True) 
+#wykresy pionowe kropkowe, ka¿da kategoria jest przedstawiona w kropkach pogrupowanych w pionowy sposób
+sns.stripplot(x='day', y='total_bill', data=tips, jitter=True, hue='sex', split=True)
+
+sns.swarmplot(x='day', y='total_bill', data=tips)
+#przedstawione wykresy za pomoc¹ kropek, ale troche na ksztalt wioliny
+
+sns.swarmplot(x='day', y='total_bill', data=tips)
+sns.violinplot(x='day', y='total_bill', data=tips, color='black') 
+#na jednym wykresie s¹ kropki i wioliny 
+
+sns.factorplot(x='day', y='total_bill', data=tips, kind='bar')
+sns.factorplot(x='day', y='total_bill', data=tips, kind='violin')
+#powy¿sze pozwlala na definiowanie wykresu za pomoc¹ opcji 'kind'.
+
+###MATRIX PLOTS
+
+flights = sns.load_dataset('flights')
+
+#heatmaps
+flights.head()
+tips.corr()
+#powstaje macierz korelacji dla wskazanej tablicy
+tc=tips.corr()
+sns.heatmap(tc)
+
+sns.heatmap(tc, annot=True, cmap='colorwarm') 
+#annot=True - bedzie pokazywaæ w³aœciwe wartoœci na ka¿dym kwadracie pokolorowanym
+
+fp = flights.pivot_table(index='month', columns='year', values='passenger')
+#przeksztalci to tabele na macierz
+
+sns.heatmap(fp)
+#przekszta³ca macierz na heatmape
+
+sns.heatmap(fp, cmap='magma', linecolor='white', linewidth=1)
+#cmap='magma' - ciemne kolory, linecolor - wskazuje na obramówki kwadratow macierzy, linewidth na grubosc kresek wyznaczajacych kwadraty
+
+sns.clustermap(fp)
+#wskazuje na takie drzewo klastowane w po³¹czeniu z heatmapa
+
+sns.clustermap(fp, cmap='colorwarm', standard_scale=1)
+
+
+#GRIDS
+iris=sns.load_datase('iris')
+iris.head()
+iris['species'].unique()
+#sprawdzenie wartoœci unikalnych w kolumnie 
+
+sns.pairplot(iris)
+#stworzy siê ca³a macierz wykresów - zale¿noœci pomiêdzy wszystkimi zmiennymi ci¹g³ymi
+
+g=sns.PairGrid(iris) 
+#wyœwietli puste wykresy, ale pozwalajace na pokazanie dok³adnie tyle ile wyrzuci³oby z automatu 
+g.map_diag(sns.distplot)
+g.map_upper(plt.scatter)
+g.map_lower(sns.kdeplot)
+#wówczas wyswietla sie rozne rodzaje wykresow
+
+tips = sns.load_dataset('tips')
+tips.head()
+
+g = sns.FaceGrid(data=tips, col='time', row='smoker')
+#powstanie pusty Grid, wiec musze go uzupelnic takimi rodzajami wykresow jak chce
+g.map(sns.distplot, 'total_bill')
+#wiêc wykresy narysuj¹ siê dla total_bill wg dwóch zmiennych kategorycznych 
+g.map(plt.scatter,'total_bill', 'tip')
+#teraz rozwa¿ane s¹ dwie zmienne ci¹g³e 
+
+
+##REGRESSION PLOTS
+sns.lmplot(x='total_bill', y='tip', data=tips, hue='sex', markers=['o','v'], scatter_kws=['s':100]) 
+#wyswietli siê scatter plot (czyli punktowy), ale lini¹ regresji dopasowan¹ do tych danych 
+#scatter_kws=['s':100] - wielkoœæ markerów na wykresie 
+
+sns.lmplot(x='total_bill', y='tip', data=tips, col='sex', row='time', heu='day', aspect=0.6, size=8)
+#col='sex' - sprawi, ze pojawi¹ siê dwa wykresy w zale¿noœci od wartosci sex
+#row='time' - pojawi sie caly rzad wykresow w zaleznosci od wartosci time
+
+
+## STYLE AND COLOR
+sns.set_style('white')
+#wtedy bêdzie bia³e t³o w wykresie
+sns.set_style('whitegrid')
+sns.set_style('ticks')
+sns.set_style('darkgrid')
+sns.countplot(x='sex', data=tips)
+
+sns.despine()
+#usuwa górn¹ i boczn¹ liniê na wykresie 
+
+sns.despine(left=True, bottom=True) 
+#usuwa wszystkie boczne i górne krawêdzie wykresu 
+
+plt.figure(figsize=(12,3))
+#ustawia wielkoœæ wykresu
+
+#poni¿sze ustawiaj¹ wielkoœci wykresów, które tworzy siê po ustawieniu tego 
+sns.set_context('poster')
+sns.set_context('poster', font_scale=3)
+#font_scale=3 - trzy razy wiêksza czcionka
+sns.set_context(notebook')
+
+
+sns.lmplot(x='total_bill', y='tip', data=tips, hue='sex', palette='coolwarm')
+sns.lmplot(x='total_bill', y='tip', data=tips, hue='sex', palette='seismic')

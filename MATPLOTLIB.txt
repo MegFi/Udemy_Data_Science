@@ -1,0 +1,162 @@
+#Matplotlib
+import matplotlib.pyplot as plt 
+%matplotlib inline 
+#powyzsze pozwala na wyœlwietlanie wykresow w notebooku 
+import numpy as np 
+
+x= np.linspace(0,5,11) 
+y = x ** 2
+x
+y
+
+#FUNCTIONAL 
+plt.plot(x, y)
+#wykres zwyk³ej regresji - wykresu zale¿noœci 
+plt.xlabel('X label')
+plt.ylabel('Y label')
+plt.title('Title')
+plt.show()
+
+#Multiplots
+plt.subplot(#nrows, #ncolums, #plotnumber)
+plt.subplot(1,2,1)
+plt.plot(x,y,'r')
+
+plt.subplot(1,2,2)
+plt.plot(y,x,'b')
+
+#Object-oriented method
+fig = plt.figure()
+#blank campus
+
+axes = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+axes.plot(x,y)
+axes.set_xlabel('X label')
+axes.set_ylabel('Y Label')
+axes.title('Set Title')
+
+fig = plt.figure()
+axes1 = fig.add_axes([0.1,0.1,0.8, 0.8])
+#wszystkie wartoœci musz¹ byæ od 0 do 1, bo wskazuj¹ ile maj¹ zaj¹æ miejsca na ca³ym wykresie
+#lewy dó³, wysokoœæ do³u, szerokoœæ, wysokoœæ
+axes2 = fig.add_axes([0.2,0.5,0.4,0.3])
+
+axes1.plot(x,y)
+axes1.set_title('LARGER PLOT')
+axes2.plot(y,x)
+axes2.set_title('SMALLER PLOT')
+#na podstawie powyzszego mamy wykres w wykresie 
+
+fig = plt.figure()
+axes = fig.add_axes([0.1,0.1,0.8,0.8])
+#powyzej wyswietli siê pusty wykres
+
+####
+
+fig, axes = plt.subplots()
+axes.plots(x,y)
+#nie ro¿ni siê od prostego podejœcia
+
+fig, axes = plt.subplots(nrows=1, ncols=2)
+#wyswietl¹ siê dwa puste wykresy 
+
+for current_ax in axes:
+	current_ax.plot(x,y)
+
+#wyswietl¹ siê dwa takie same wykresy w rzêdzie 
+fig, axes = plt.subplots(nrows=1, ncols=2)
+axes[0].plot(x,y)
+axes[0].set_title('First plot')
+#najpierw wype³niam pierwszy wykres, a potem drugi w figure
+axes[1].plot(x,y)
+axes[1].set_title('Second plot')
+
+plt.tight_layout
+
+#Figure Size and DPI
+fig = plt.figure(nrows=2, ncol=1,figsize=(8,2))
+#najpierw szerokoœæ, potem wysokoœæ
+axes[0].plot(x,y)
+axes[1].plot(y,x)
+
+fig.savefig('my_picture.png', dpi=200) 
+#dpi jeœli chcemy okreœliæ dok³adnoœæ
+fig.savefig('my_picture.jng')
+
+fig=plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.plot(x,y)
+
+ax.set_title('Title')
+ax.set_ylabel('Y')
+ax.set_xlabel('X')
+
+#legenda
+ax.plot(x,x**2, label='X Squared')
+ax.plot(x,x**3, label='X Cubed')
+#wyswietla siê dwie linie na jednym wykresie
+ax.legend()
+#zeby wyœwietli³a sie legenda trzeba nadaæ labelki przy definicji wykresu
+ax.legend(loc=0)
+#jeœli chcemy wsakzaæ gdzie powinna wyœwietlaæ sie legenda na wykresie, trzeba sprawdzac w dokumentacji, co oznacza dana liczba, ktora lokalizacje
+
+
+##PLOT APPEARANCE
+fig =plt.figure()
+ax = fig.add_axes([0,0,1,1])
+ax.plot(x,y, color='green')
+ax.plot(x,y, color='#FF8C00') # RGB Hex Code
+ax.plot(x,y, color=''purple), linewidth=3, alpha=0.5)
+#wskazuje, ¿eby linia by³a 3 razy grubsza ni¿ standardowa, alpha sprawia, ¿e linia jest trochê przeŸroczysta
+ax.plot(x,y, color=''purple), lw=3, linestyle='steps')
+ax.plot(x,y, color=''purple), lw=3, linestyle=':')
+ax.plot(x,y, color=''purple), lw=3, ls='--')
+
+x
+len(x) 
+#length of x
+
+ax.plot(x,y, color=''purple), lw=3, ls='-', marker='o')
+#marker oznacza w³aœciwe wartoœci w array 
+ax.plot(x,y, color=''purple), lw=3, ls='-', marker='1', markersize=20)
+ax.plot(x,y, color=''purple), lw=3, ls='-', marker='+', markersize=1)
+#markersize=1 - bardzo malutkie
+
+ax.plot(x,y, color=''purple), lw=3, ls='-', marker='o', markersize=20, markerfacecolor='yelow', markeredgewidth=3, markeredgecolor='green')
+
+#PLOT RANGE
+ax.plot(x,y, color=''purple), lw=3, ls='--')
+ax.set_xlim([0,1])
+ax.set_ylim([0,2])
+#ustala ograniczenia linii na wykresie
+
+
+#Ustawianie wartoœci na linii X i Y
+fig, ax = plt.subplots(figsize=(10, 4))
+
+ax.plot(x, x**2, x, x**3, lw=2)
+
+ax.set_xticks([1, 2, 3, 4, 5])
+ax.set_xticklabels([r'$\alpha$', r'$\beta$', r'$\gamma$', r'$\delta$', r'$\epsilon$'], fontsize=18)
+
+yticks = [0, 50, 100, 150]
+ax.set_yticks(yticks)
+ax.set_yticklabels(["$%.1f$" % y for y in yticks], fontsize=18); # use LaTeX formatted labels
+
+#Ustawianie siatki na wykresie axes[0].grid(True)
+fig, axes = plt.subplots(1, 2, figsize=(10,3))
+
+# default grid appearance
+axes[0].plot(x, x**2, x, x**3, lw=2)
+axes[0].grid(True)
+
+# custom grid appearance
+axes[1].plot(x, x**2, x, x**3, lw=2)
+axes[1].grid(color='b', alpha=0.5, linestyle='dashed', linewidth=0.5)
+
+
+df3.iloc[0:30].plot.area(alpha=0.4)
+#zbior.iloc[0:30] - oznacza, ¿e chce mieæ na wykresie tylko obserwacje od 0 do 30
+
+#po³o¿enie legendy
+plot.legend(loc='center left', bbox_to_anchor=(1, 0.5))
