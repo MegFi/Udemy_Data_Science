@@ -1,0 +1,348 @@
+conda install pandas
+#lub
+pip install pandas
+import pandas as np 
+
+###SERIES
+import numpy as np 
+
+labels = ['a', 'b', 'c']
+my_data = [10,20,30]
+arr = np.array(my_data)
+d = {'a':10, 'b':20, 'c':30}
+
+pd.Series(data = my_data)
+
+pd.Series(data=my_data, index = labels)
+#wtedy jako numer wiersza bedzie wartosc labels
+
+pd.Series(my_data, labels) 
+# to samo co wyżej 
+
+pd.Series(arr, labels)
+# to to samo
+
+pd.Series(d)
+#ze słownika wyjdzie to samo 
+
+pd.Series(data=labels)
+
+pd.Series(data=[sum,print,len])
+#można wsadzić tam nawet opcje jak suma, print itd, a w array nie da się tego zrobić 
+
+ser1 = pd.Series([1,2,3,4],['USA', 'Germany', 'USSR', 'Japan'])
+ser1
+ser2=pd.Series([1,2,5,4], ['USA', 'Germany', 'Italy', 'Japan'])
+ser2
+
+ser1['USA']
+# wyjdzie wartość dla labela 'USA'
+
+ser3 = pd.Series(data=labels)
+ser3
+ser3[0]
+#wyjdzie wartosc a
+
+ser1 + ser2
+#bedzie probowac wykonac operacje sumowania na podstawie indeksow 
+#jesli indeks sie nie znajduje w obu seriach to daje NaN, czyli brak danych 
+
+###DATA FRAMES
+
+from numpy.random import randn
+np.random.seed(101)
+
+df = pd.DataFrame(randn(5,4),['A', 'B', 'C', 'D', 'E'],['W','X','Y','Z'])
+df
+#bedzie tabelka, w ktorej nazwy wierszy to ABCDE, zas nazwy kolumn to WXYZ, zas wartosci są losowe 
+
+df['W']
+# zwraca kolumne W 
+
+type(df['W'])
+#zwraca rodzaj danych, ze jest to Series
+
+df[['W', 'Z']]
+# jesli chce wiecej niz jedna kolumne, to musze to wpisac jako liste []
+
+df['new'] = df['W'] + df['Y']
+#tworzenie nowej kolumny w dataframe, bedzie sie ona wyswietlala na koncu tabeli 
+
+df.drop('new', axis=1)
+#wtedy porzucam kolumne 'new'
+
+df.drop('E')
+# lub 
+df.drop('E', axis=0)
+#wtedy porzucam wiersz E
+
+df.shape
+
+df.loc['A']
+#zwroci serie dla wiersza 'A', ale trzeba wskazac nazwe wiersza, jesli mamy numer, to trzeba uzyc 'iloc'
+
+df.iloc[2] 
+# zwroci trzeci wiersz , ale trzeba wstawic numeryczna wartosc dla wiersza 
+
+df.loc['B','Y']
+#bedzie wartosc z lokalizacji BY
+
+df.loc[['A','B'], ['W', 'Y']]
+#wyciagnie malutka tabelke z tej calej tabeli 
+
+df>0 
+#wyswietli taki sam data frame tylko z warrtosciami true i false 
+
+booldf - df >0 
+df[booldf] 
+#wtedy wysietla się wartosci tam gdzie jest True, a tam gdzie False, bedzie wartosc NaN
+
+df['W']>0 
+#wyswietli sie tylko kolumna W z wartosciami True i False 
+
+df[df['W']>0]
+#wyswietli sie tabela ktora spelnia ten warunek, ale cala tabela bez wierszy, dla ktorych w kolumnie W sa wartosci mniejsze niz 0 lub rowne
+
+resultdf = df[df['W']>0]
+resultdf['X']
+#wtedy bedziemy miec serie danych z kolumna X spelniajaca warunek wczesniejszy 
+df[df['W']>0][['Y','X']]
+#to samo co wczesniej, ale dodatkowo z kolumna Y 
+
+boolser = df['W']>0 
+result = df[boolser]
+# bedzie w wyniku Data Frame bez wiersza C
+
+mycols=['Y', 'X']
+result[my_cols]
+# to samo co wczesniej, bedzie data frame z kolumnami Y i X i bez wiersza C
+
+df[(df['W']>0) & (df['Y']>1)]
+#musimy uzyc &, bo 'and' dziala tylko na True i False 
+# jesli chodzi o OR, to uzywamy |
+
+df[(df['W']>0) | (df['Y']>1)]
+#tutaj zastosowane jest OR
+
+df.reset_index()
+#wartości A,B,C,D,E nie beda juz wartosciami indeksu, tylko bedzie sie wyswietlac w osobnej kolumnie o nazwie index
+
+newind = 'CA NY WY OR CO'.split()
+#bedzie lista o wartosciach ['CA','NY', 'WY','OR','CO']
+
+df['States'] = newind
+df.set_index('States')
+#teraz indeksem bedzie kolumna States
+
+#Index levels 
+outside = ['G1', 'G1','G1', 'G2', 'G2']
+inside = [1,2,3,1,2,3]
+hier_index = list(zip(outside, inside))
+hier_index = pd.MultiIndex.from_tuples(hier_index)
+
+df = pd.DataFrame(randn(6,2), hier_index,['A','B'])
+#data frame w ktorym pierwszym indeksem jest G1 i G2, a kolejnym 1,2,3
+
+df.loc['G1']
+#wyjdzie tylko gorna czesc dotyczaca G1, tylko te wiersze dla G1
+
+df.index.names
+#wyjdzie FrozenList([None, None])
+#wiec 
+df.index.names=['Groups', 'Num']
+#pierwszy indeks bedzie sie nazywał Groups dla (G1, G2) i Num dla (1,2,3)
+
+df.loc['G2'].loc[2]['B']
+#wyjdzie jedna liczba w podanej lokazlizacji 
+
+df.loc['G1']
+df.xs['G1']
+#to samo co wyzej 
+
+df.xs(1, level='Num')
+#wyswietli sie to, co jest przypisane do indeksu 1 w levelu 'Num', ale dla obu indeksów G1, G2. 
+
+
+###MISSING DATA
+
+d= {'A':[1,2,np.nan],'B':[5, np.nan, np.nan], 'C':[1,2,3]}
+df = pd.DataFrame(d)
+df
+
+df.dropna()
+#wyrzuci wszystkie wiersze w ktorych wystepujee choc jeden brak danych 
+
+df.dropna(axis=1)
+#usunie kazda kolumne, w ktorej znajduja sie braki danych 
+
+df.dropna(threshold=2)
+#wyrzuci z data frame te wiersze, w ktorych jest mminum dwa braki danych 
+
+###Uzupelnianie brakow danych 
+
+df.fillna(value='FILL VALUE')
+#uzupelni brakujace wartosci wartością 'FILL VALUE'
+
+df['A'].fillna(value = df['A'].mean())
+#uzupelni braki danych w kolumnie A srednia wartoscia z kolumny A
+
+###GROUPBY
+
+data = {'Company': ['GOOG', [GOOG], 'MSFT', 'MSFT', 'FB', 'FB'], 
+		'Person':['Sam', 'Charlie', 'Amy', 'Vanessa', 'Carl', 'Sarah'], 
+		'Sales': [200, 120, 340, 124, 234, 350]}
+		
+byComp = df.groupby('Company')
+byComp.mean()
+# bedzie policzona srednia z Sales dla kazdej firmy 
+
+byComp.sum()
+#bedzie suma 
+
+byComp.std()
+
+byComp.sum().loc['FB']
+#wyswietli sie sprzedaz dla FB
+df.groupby('Company').sum().loc['FB']
+#to samo co wyzej 
+
+df.groupby('Company').max()
+
+df.groupby('Company').min()
+#bedzie tabela dla firm z minimalnymi waratosciami 
+
+df.groupby('Company').describe().transpose()['FB']
+#bedzie wyliczonych wiecej statystyk - liczba, srednia, odchylenie standrdowe, q1, q2, q3, max
+#bedzie tylko dla FB wyliczone i tabelka z wynikami bedzie przetransponowana 
+
+###Merginig Joining and Concatenating 
+
+df1
+df2
+df3
+
+#zalozmy ze sa zdefiniowane
+
+###CONCATENATION
+
+pd.concat([df1,df2,df3])
+#polaczenie trzech data frame, jako append w tym przypadku 
+
+pd.concat([df1,df2,df3], axis=1)
+#tutaj laczenie jest w poziomie, wiec bedzie taka jakby macierz i na przekatnej beda kolejno data frame'y zdefiniowane 
+
+left 
+right 
+#to inne df i maja kolumne wspolna key, zas left ma kolumny jeszcze A i B, zas right CD
+
+pd.merge(left, right, how='inner', on='key')
+#beda polaczone oba data frame i beda tam wszystkie kolumny i bedzie laczenie na podstawie kolumny key 
+
+#jesli beda dwa klucze 
+pd.merge(left, right, on=['key1', 'key2'])
+pd.merge(left, right, how='outer', on=['key1', 'key2'])
+
+#jesli data frame maja zdefiniowane indexy i po nich łaczymy to:
+left.join(right)
+left.join(right, how='outer') 
+
+###OPERATIONS
+
+df.head()
+#wyswietli 5 pierwszych wierszy 
+
+df['col2'].unique()
+#wyjdzie macierz unikalnych wwartosci dla kolumny col2
+
+len(df['col2'].unique())
+#liczba unikalnycch wartosci 
+df['col2'].nunique()
+#tak samo liczba unikalnych wartosci 
+
+df['col2'].value_counts()
+#zlicza wystepowanie wartosci 
+
+df[(df['col1']>2) & (df[col2]==444)] 
+
+df['col1']>2
+#wyswietli False i True dla tej kolumny we wszystkich wierszach 
+
+def times2(x):
+	return x*2
+	
+df['col1'].apply(times2)
+#apply pozwala na zastosowanie funkcji zdefiniowanej w def
+
+df['col3'].apply(lambda x: x*2)
+# to samo co wczesniej z def 
+
+df.colums
+#wyjdzie lista nazw kolumn
+
+df.index
+#daje informacje o indexie w data frame 
+
+df.sort_values(by='col2')
+#sortowanie po kolumnie col2
+
+df.isnull()
+# zwraca data frame zlozony z False i True 
+
+#tabele przestawne (PIVOT TABLES)
+df.pivot_table(values='D', index=['A', 'B'], columns=['C'])
+
+#### DATA INPUT AND OUTPUT
+conda install sqlalchemy
+conda install lxml
+conda install html5lib
+conda install BeautifulSoup4
+#moze byc tez z instrukcja PIP
+
+pwd 
+#lokalizacja gdzie powinny byc pliki, ktore chcemy zaimportowac
+import pandas as pd
+df = pd.read_csv('example.csv')
+#wczytanie pliku csv
+
+pd.read_sql
+#tez tak moze byc...
+
+df.to_csv('My_output', index=False)
+#tak samo jak mozna czytac z , tak mozna tez zapisac do pliku 
+#dzieki index=False, wowczas kolumna z indeksem nie będzie nienazwana 
+
+pd.read_csv('My_output')
+
+#jeśli nie uzywa sie Anacondy to wtedy w terminalu nalexy wpisac:
+conda install xlrd
+
+pd.rread_excel('Excel_Sample.xlsx', sheetname='Sheet1')
+#przeczyta plik z danego excela i danego arkusza w nim 
+
+df.to_excel('Excel_Sample2.xlsx', sheet_name='NewSheet')
+#zapisanie do pliku excel i do arkusza o danej nazwie 
+
+data = pd.read_html('https://www.fdic.gove/bank/individual/failed/banklist.html')
+type(data)
+#bedzie to lista
+#bedzie szukac na tej stronie jakiejkolwiek tabeli, odwolania sie do jakiejkolwiek tabeli na danej stonie 
+
+data[0].head()
+#pokaze to co wczytalo ze strony html 
+
+data.info()
+#informacja ile kolumn i ile wierszy i jakiego rodzaju sa to obiekty
+
+
+
+from sqlachemy import create_engine 
+engine = create_engine('sqlite:///:memory:')
+#utworzy to w pamieci mala baze sql 
+
+df.to_sql('my_table', engine)
+sqldf = pd.read_sql('my_table', con=engine)
+#wczytanie tabli w sql 
+
+
+
+

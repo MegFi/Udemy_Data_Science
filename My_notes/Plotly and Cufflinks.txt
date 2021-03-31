@@ -1,0 +1,80 @@
+###PLOTLY
+pip install chart-studio
+
+import chart_studio.plotly as py 
+
+colorscale='ylorbr'
+projection={'type':'mercator'}
+
+###Cufflinks connects PLOTLY with pandas
+pip install plotly 
+pip install cufflinks 
+#to w terminalu trzeba wywolać, nie w pythonie 
+
+###plot.ly 
+
+#mozna robic np. wykresy 3D
+
+import pandas as pd 
+import numpy as np 
+from plotly import __version__
+print(__version__)
+#wersja plotly 
+
+import cufflinks as cf 
+from plotly.offline import download_plotlyjs,init_notebook_mode,plot,iplot
+#bedziemy uzywac plotly offline
+
+init_notebook_mode(connected=True)
+
+cf.go_offline()
+#sprawia ze bedziemy uzywac cufflinks offline
+
+#DATA
+df = pd.DataFrame(np.random.randn(100,4),columns='A B C D'.split())
+
+df.head()
+
+df2 = pd.DataFrame(('Category': ['A','B','C'], 'Values':[32,43,50]))
+%matplotlib inline
+df.plot()
+
+df.iplot()
+#bedzie wykres liniowy interaktywny, można zoomować, pokazuje wartosci w poszczegolnych miejscach i mozna tez inne opcje poklikac
+
+df.iplot(kind='scatter',x='A', y='B')
+#wykres punktowy, gdzie punkty sa polaczone liniami 
+
+df.iplot(kind='scatter',x='A', y='B', mode='markers', size=20)
+# w tym przypadku beda same punkty, size sprawia ze punkty beda wieksze
+
+df.iplot(kind='bar', x='Category', y='Values')
+#wyjdzie wykres słupkowy 
+
+df.count().iplot(kind='bar')
+df.sum().iplot(kind='bar')
+
+###BOXPLOT
+df.iplot(kind='box')
+#mozna np wylaczyc ktoras kategorie klikajac na leegende
+
+df3 = pd.DataFrame({'x':[1,2,3,4,5],'y':[10,20,30,20,10], 'z':[500,400,300,200,100]})
+df3.iplot(kind='surface', colorscale='rdylbu')
+#colorscale zmienia kolory tworzace skale, kazda literka jest od innego koloru
+
+df['A'].iplot(kind='hist',bins=50)
+
+df.iplot(kind='hist',bins=50)
+#nakladajace sie na siebie histogramy w zaleznosci od zmiennej 
+
+df[['A','B']].iplot(kind='spread')
+#rozstrzał pomiedzy A i B
+
+df.iplot(kind='bubble',x='A',y='B', size='C')
+#bąbelkowy wykres 
+
+df.scatter_matrix()
+#wyjdzie macierz wykresow, na przekatnej beda histogramy, a pozostałe punktowe 
+
+
+

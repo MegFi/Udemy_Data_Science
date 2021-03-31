@@ -1,0 +1,191 @@
+##NUMPY
+
+conda install numpy
+#lub w terminalu
+pip install numpy
+
+##NUMPY ARRAYS
+my_list = [1,2,3]
+my_list 
+
+import numpy as np 
+np.__version__
+#wyswietli wersje zainstalowanej biblioteki numpy
+
+np.array(my_list)
+#utworzy sie macierz z listy o jednym wymiarze 
+
+my_mat = [[1,2,3],[4,5,6],[7,8,9]]
+#mamy listy w liscie
+
+np.array(my_mat)
+#dwuwymiarowa macierz
+
+np.arange(0,10)
+#będzie zawierać 10 elementów od 0, ale bez 10. 
+
+np.arange(0,11,2)
+#będzie w wyniku [0,2,4,6,8,10], czyli co druga liczba
+
+np.zeros(3)
+#same zera 
+
+no.zeros((2,3))
+#będzie macierz o dwóch wierszach i trzech kolumnach 
+
+np.ones(3,4)
+#macierz o 3 wierszach i 4 kolumnach składajaca sie tylko z jedynek 
+
+np.linspace(0,5,10)
+#zwrca jednowymiarowy wektor z 10 elementami od 0 do 5 
+
+np.eye(4)
+#macierz jednostkowa - na przekatnej sa jedynki 
+
+np.random.rand(5)
+#losowych 5 liczb z przedzialu (0,1)
+np.random.randn(2)
+#macierz dwuelementowa z rozkładu normalnego 
+
+np.random.randint(1,100,10)
+#macierz 10-elementowa z losowymi libczbami całkowitymi z przedzialu (1,100)
+
+arr=np.arange(25)
+#wyswietli macierz od 0 do 24
+
+arr.reshape(5,5)
+#przeksztalca macierz w macierz o podanych wymiarach w instrukcji reshape
+
+arr.max()
+arr.min()
+#wskazuje max i min wartość w macierzy
+
+arr.argmax()
+#wskazuje miejsce na którym podana jest wartość maksymalna w macierzy
+
+arr.shape()
+#zwraca wymiary macierzy 
+
+arr = arr.reshape(5,5)
+arr.shape()
+
+arr.dtype
+#wskaze jaki rodzaj danych jest w macierzy 
+
+from numpy.random import randint 
+randint(2,10)
+
+np.array(range(5))
+#macierz od 0 do 4
+
+np.array(range(5,10,2), float)
+#elementy od 5 do 9 z "." i co druga liczba
+
+np.array([x for x in range(5, 10, 2)], float)
+#to to samo co wyzej 
+
+np.arange(0.0, 1.0, 0.3)
+# array([0. , 0.3, 0.6, 0.9])
+
+np.linspace(2.0, 3.0, num=5, retstep=True)
+# (array([2.  ,  2.25,  2.5 ,  2.75,  3.  ]), 0.25)
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+np.zeros_like(a)
+# array([[0, 0, 0],
+#        [0, 0, 0]])
+#zeros_like odzwierciedla zerami jakas juz utworzona macierz
+
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6]], float)
+
+np.ones_like(a)
+# array([[1., 1., 1.],
+#        [1., 1., 1.]])
+
+
+np.full((2, 2), 10)
+# array([[10, 10],
+#        [10, 10]])
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]])
+
+str(a)
+# '[[1 2 3]\n [4 5 6]\n [7 8 9]]'
+
+print(a)
+# [[1 2 3]
+#  [4 5 6]
+#  [7 8 9]]
+
+repr(a)
+# 'array([[1, 2, 3],\n       [4, 5, 6],\n       [7, 8, 9]])'
+
+result = np.array([x for x in range(0, 100) if x % 2 == 0], dtype=float)
+# 9.76 µs ± 324 ns per loop (mean ± std. dev. of 10 runs, 1000000 loops each)
+
+result = np.array([float(x) for x in range(0, 100) if x % 2 == 0])
+# 12.7 µs ± 195 ns per loop (mean ± std. dev. of 10 runs, 1000000 loops each)
+
+
+a = np.array([1, 2, 3])
+
+type(a)
+# <class 'numpy.np.ndarray'>
+
+a.dtype
+# dtype('int64')
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6]])
+
+a.astype(np.float64)
+# array([[1., 2., 3.],
+#        [4., 5., 6.]])
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]])
+
+a.flatten()
+# array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+
+a = np.array([[1, 2, 3],
+              [4, 5, 6],
+              [7, 8, 9]])
+
+a.ravel()
+#zwraca odwołanie sie do macierzy
+# array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+a = np.array([1, 2, 3])
+a.size 
+#3
+#wskazuje liczbe elementow
+a.shape
+#wymiary macierzy
+
+a.ndim
+#liczbe wymiarow macierzy
+
+b = np.array([[1, 2, 3],
+              [4, 5, 6]])
+len(b)
+#liczba elementow w pierwszym wymiarze macierzy
+
+c = np.array([1, 2, 3], dtype=np.int64)
+c.itemsize
+# 8
+#liczba bajtów wykorzystana 
+
+b = np.array([[1, 2, 3],
+              [4, 5, 6]])
+b.strides
+# (24, 8)
+#to są jakieś przeskoki

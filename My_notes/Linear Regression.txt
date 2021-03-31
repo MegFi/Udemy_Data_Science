@@ -1,0 +1,104 @@
+###Scikit-learn
+conda install scikit-learn
+
+pip install scikit-learn
+
+from sklearn.linear_model import LinearRegression
+#from sklearn.family import Model - family, czyli grupa modeli, a Model czyli nazwa metody 
+
+model = LinearRegression(normalize=True)
+import numpy as np 
+from sklearn.model_selection import train_test_split 
+X, y = np.arange(10).reshape((5,2)), range(5)
+
+X_train, X_test, y_train, y_test - train_test_split(X,y, test_size=0.3)
+
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+
+model.predict_proba()
+#zwraca prawdopodobnienstwo... 
+
+model.score()
+
+model.transform() 
+#przekształcenie nowych danych w nowa podstawę, wykorzystuje się w nienadzorowanym modelowaniu
+
+###LINEAR REGRESSION
+import pandas as pd 
+import numpy as np 
+
+import matplotlib.pyplot as plt 
+import seaborn as sns
+%matplotlib inline
+
+df = pd.read_csv('USA_Housing.csv')
+df.head()
+df.info()
+df.describe()
+#statystyki podstawowe dla kolumn w df
+
+df.columns
+#lista kolumn w df
+
+sns.pairplot(df)
+#wszystkie zmienne na wykresach i zaleznosci miedzy nimi - kazda z kazda
+
+sns.distplot(df['Price'])
+#rozklad zmiennej Price w df
+
+sns.heatmap(df.corr(), annot=True)
+#heatmapa korelacji 
+
+df.columns
+x = df[[lista kolumn]]
+y=df['Price']
+
+from sklearn.model_selection import train_test_split 
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size =0.4, random_state=101)
+
+from sklearn.linear_model import LinearRegression 
+lm = LinearRegression()
+lm.fit(X_train, y_train)
+
+print(lm.intercept_)
+#wyświetli się wartość wyrazu wolnego 
+
+lm.coef_
+#wartości współczynników, które wyswietlaja sie w array 
+X_train.columns 
+pd.DataFrame(lm.coef_, X.columns, columns=['Coeff'])
+#załadowanie wspołczynników do tabeli, żeby łatwiej się czytało 
+
+from sklearn.datasets import load_boston
+boston = load_boston()
+boston.keys()
+
+print(boston['DESCR'])
+#wyswietli sie opis zbioru 
+
+print(boston['features_names'])
+
+###PREDICTIONS
+predictions = lm.predict(X_test) 
+predictions
+#predykcja na zbiorze testowym 
+
+plt.scatter(y_test, predictions)
+#wizualizacja na wykresie predykcji i wartości oryginalnych 
+
+sns.distplot((y_test-predictions))
+#wykres rozkładu reszt 
+
+
+from sklearn import metrics
+metrics.mean_absolute_error(y_test, predictions)
+metrics.mean_squared_error(y_test, predictions)
+np.sqrt(metrics.mean_squared_error(y_test, predictions))
+#root squared mean error
+
+
+
+###BIAS VARIANCE TRADE-OFF
+
+
