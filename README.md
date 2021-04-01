@@ -1,2 +1,2 @@
 # Udemy_Data_Science
-Materials from Data Science Course
+Materials and exercises from Data Science Course
